@@ -1,3 +1,9 @@
+Node.js version used when building this app - 18.19.0
+
+NPM version used when building this app - 10.2.3
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

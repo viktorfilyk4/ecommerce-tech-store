@@ -1,6 +1,4 @@
-Node.js version used when building this app - 18.19.0
-
-NPM version used when building this app - 10.2.3
+Node.js version used when building this app - 18.x
 
 ---
 

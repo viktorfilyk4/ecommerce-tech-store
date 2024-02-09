@@ -6,7 +6,7 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import WebsiteSupport from "@/components/WebsiteSupport"
 
-export const poppins = Poppins({ subsets: ["latin"], weight: ["300", "600"] })
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "600"] })
 
 export const metadata: Metadata = {
   title: "Create Next App",

@@ -53,7 +53,7 @@ export default function SignupForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='max-w-[500px] mx-auto'
+        className='mx-auto'
       >
         <div className='flex flex-col gap-y-4'>
           <FormField

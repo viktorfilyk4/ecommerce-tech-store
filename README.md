@@ -29,3 +29,8 @@ docker compose down
 
 ## Production
 It uses Vercel for production
+
+
+
+## Database ER diagram
+I have made ER diagram for this project with Miro. Check it [here](https://miro.com/app/board/uXjVNuytX6o=/).

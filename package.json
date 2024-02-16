@@ -2,17 +2,11 @@
   "name": "ecommerce-tech-store",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "18.x"
-  },
-  "engineStrict": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "check-node-version": "node check-node-version.js",
-    "preinstall": "npm run check-node-version"
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

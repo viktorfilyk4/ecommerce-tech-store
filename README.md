@@ -15,10 +15,10 @@ docker compose up -d
 It uses `docker-compose.yml` in root directory and do the following:
 - Create a volume `db-data` to persist data for Postgres.
 - Create an internal network for communication between service (service refer to other service by name, for example, inside `adminer` call database with `db`).
-- Create a container for Next.js app using `Dockerfile` in root directory.  
+- Start Next.js app using `Dockerfile` in root directory.  
 `/src` and `/public` are mounted to the container, so any changes on the host will show up in the container.
-- Create a Postgres database container and attach its' data to the volume `db-data`.
-- Create Adminer container for visualizing data in database.
+- Start a Postgres database and attach its' data to the volume `db-data`.
+- Start Adminer for visualizing data in database.
 4. Now enter `localhost:3000` and `localhost:8080` in your browser. It will show up Next.js app and Adminer panel respectively.
 
 To shut down containers, run:

@@ -1,0 +1,143 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// field name, type(Int, String, etc), modifier(?,[]), attributes(@), attribute_functions()
+model Customer {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  firstName   String   @db.VarChar(50)
+  lastName    String   @db.VarChar(50)
+  password    String
+  avatarUrl   String?  
+  phoneNumber String?  @db.VarChar(30)
+  customerAddress CustomerAddress?
+  orders      Order[]
+}
+
+model CustomerAddress {
+  id           Int      @id @default(autoincrement())
+  streetName   String   @db.VarChar(50)
+  houseNumber  String   @db.VarChar(20) 
+  city         City     @relation(fields: [cityId], references: [id])
+  cityId       Int      // may relate to the same city multiple times
+  customer     Customer @relation(fields: [customerId], references: [id])
+  customerId   Int      @unique // relates only to one customer
+}
+
+model Country {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(50)
+  regions      Region[]
+}
+
+model Region {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(50)
+  country      Country  @relation(fields: [countryId], references: [id])
+  countryId    Int      
+  cities       City[]
+}
+
+model City {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(50)
+  zip_code     String   @db.VarChar(50)
+  region       Region   @relation(fields: [regionId], references: [id])
+  regionId     Int      
+  customerAddresses CustomerAddress[]
+}
+
+model Order {
+  id           Int       @id @default(autoincrement())
+  status       Boolean
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  customer     Customer  @relation(fields: [customerId], references: [id])
+  customerId   Int
+  products     OrdersOnProducts[]
+}
+
+model OrdersOnProducts {
+  order     Order     @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product   @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+
+  @@id([orderId, productId])
+}
+
+model Product {
+  id             Int     @id @default(autoincrement())
+  name           String   
+  priceInDollars Decimal      
+  photoUrl       String?  
+  description    String?
+  numberInStock  Int     
+  amountOfRam    Int
+  color          Color
+  productManufacturer   ProductManufacturer @relation(fields: [productManufacturerId], references: [id])
+  productManufacturerId Int
+  productCategory       ProductCategory     @relation(fields: [productCategoryId], references: [id])
+  productCategoryId     Int
+  cpu                   CPU                 @relation(fields: [cpuId], references: [id])
+  cpuId                 Int 
+  gpu                   GPU                 @relation(fields: [gpuId], references: [id])
+  gpuId                 Int 
+  storageDrive          StorageDrive        @relation(fields: [storageDriveId], references: [id])
+  storageDriveId        Int 
+  orders                OrdersOnProducts[]
+}
+
+model ProductCategory {
+  id             Int     @id @default(autoincrement())
+  name           String
+  products       Product[]
+} 
+
+model ProductManufacturer {
+  id             Int     @id @default(autoincrement())
+  name           String
+  products       Product[]
+}
+
+enum Color {
+  BLACK
+  GREEN
+  PINK
+  RED
+  BLUE
+}
+
+model CPU {
+  id               Int     @id @default(autoincrement())
+  name             String
+  amountOfCores    Int?    @db.SmallInt
+  frequencyInHertz Decimal?
+  products         Product[]
+}
+
+model GPU {
+  id             Int     @id @default(autoincrement())
+  name           String
+  products       Product[]
+}
+
+model StorageDrive {
+  id             Int     @id @default(autoincrement())
+  name           String           
+  capacity       Int
+  type           StorageDriveType
+  products       Product[]
+}
+
+enum StorageDriveType {
+  HDD
+  SSD
+}

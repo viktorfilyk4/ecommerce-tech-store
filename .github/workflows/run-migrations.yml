@@ -4,10 +4,11 @@ on:
   push:
 
 jobs:
-  deploy:
+  db-migrate:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./next-app
+    defaults:
+      run:
+        working-directory: ./next-app
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

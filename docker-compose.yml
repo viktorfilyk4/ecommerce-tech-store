@@ -1,29 +1,46 @@
-# for development
+# This Docker Compose file is for development purposes
 
 version: "3"
 
 services:
   app:
     image: ecommerce-tech-store-dev
-    build: .
+    container_name: app
+    build:
+      context: ./next-app
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URL=${DATABASE_URL}
     ports:
       - 3000:3000
     volumes:
-      - ./prisma:/app/prisma
-      - ./src:/app/src
-      - ./public:/app/public
-    env_file:
-      - .env.development
-  db:
-    image: postgres:15.6
-    env_file:
-      - .env.development
-    volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./next-app/prisma:/next-app/prisma
+      - ./next-app/src:/next-app/src
+      - ./next-app/public:/next-app/public
+      # Anonymous volume - `node_modules` will not be replaced with host `node_modules`
+      # When running containers, run `docker compose up -V` to recreate anonymous volume
+      - /next-app/node_modules
+    depends_on:
+      - db
   adminer:
     image: adminer
+    container_name: db-gui
     ports:
       - 8080:8080
+    depends_on:
+      - db
+  db:
+    image: postgres:15.6
+    container_name: db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
 volumes:
   db-data:

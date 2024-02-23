@@ -1,7 +1,7 @@
 name: Run migrations to database
 
-on:
-  push:
+on: 
+  workflow_dispatch:
 
 jobs:
   db-migrate:

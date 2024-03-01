@@ -1,4 +1,4 @@
-Node.js version used when building this app - 18.x
+## Check `connect-t-db` branch for the most recent changes
 
 ---
 
